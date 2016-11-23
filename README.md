@@ -52,7 +52,7 @@ Done!
 | `source_add_drop_database`   | `TP_SOURCE_ADD_DROP_DATABASE`   | No                              | Set to `true` to add `DROP DATABASE` statements before `CREATE DATABASE` statements |
 | `source_add_drop_table`      | `TP_SOURCE_ADD_DROP_TABLE`      | No                              | Set to `true` to add `DROP TABLE` statements before `CREATE TABLE` statements |
 | `target_file`                | `TP_TARGET_FILE`                | Yes                             | Path to file in which to write the dump and/or create a new database from |
-| `target_host`                | `TP_TARGET_HOST`                | If running with `-c`/`-u`       | Name of the database host on which to create new database |
+| `target_host`                | `TP_TARGET_HOST`                | If running with `-c` or `-u`    | Name of the database host on which to create new database |
 | `target_user`                | `TP_TARGET_USER`                | Yes                             | Name of user on the host with which to create new database |
 | `target_password`            | `TP_TARGET_PASSWORD`            | No                              | Password for the user on the host with which to create new database if one is set |
 | `target_root_user`           | `TP_TARGET_ROOT_USER`           | If running with `-u`            | Name of admin user with which to create a new user on the target; only used with `-u` |
