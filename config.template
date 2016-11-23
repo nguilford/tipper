@@ -1,0 +1,54 @@
+#### Config for mysql database dump and snap.
+#### Copy this to 'config' for use with tipper
+#### script and modify as needed.
+####
+#### Any setting below may be overridden by
+#### setting the given environment variable.
+
+
+########## Source database variables ##########
+
+#Name of source database
+source_database="${TP_SOURCE_DATABASE:-}"
+
+#Source database host
+source_host="${TP_SOURCE_HOST:-}"
+
+#Source database user
+source_user="${TP_SOURCE_USER:-}"
+
+#Source database password; leave blank if no password for user
+source_password="${TP_SOURCE_PASSWORD:-}"
+
+#Space delimited list of tables to dump; all tables dumped if not set; source_database must also be set
+source_tables="${TP_SOURCE_TABLES:-}"
+
+#Set to true to include table data
+source_dump_data="${TP_SOURCE_DUMP_DATA:-}"
+
+#Set to true to add DROP DATABASE statement before each CREATE DATABASE statement
+source_add_drop_database="${TP_SOURCE_ADD_DROP_DATABASE:-}"
+
+#Set to true to add DROP TABLE statement before each CREATE TABLE statement
+source_add_drop_table="${TP_SOURCE_ADD_DROP_TABLE:-}"
+
+
+########## Target database variables ##########
+
+#Target sql file to dump to
+target_file="${TP_FILE:-}"
+
+#root user for target database; used only if new user is created
+target_root_user="${TP_TARGET_ROOT_USER:-}"
+
+#root user password for target database; used only if new user is created
+target_root_password="${TP_TARGET_ROOT_PASSWORD:-}"
+
+#Target database host
+target_host="${TP_TARGET_HOST:-}"
+
+#User name of user to use to create database on target
+target_user="${TP_TARGET_USER:-}"
+
+#Password of user to user to create database on target; #leave blank if no password for user
+target_password="${TP_TARGET_PASSWORD:-}"
