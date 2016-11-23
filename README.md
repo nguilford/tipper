@@ -44,18 +44,18 @@ Done!
 | Config Setting               | Environment Variable            | Required                        | Description |
 |:-----------------------------|:--------------------------------|:--------------------------------|:------------|
 | `source_database`            | `TP_SOURCE_NAME`                | No                              | Name of database to dump; if omitted, all databases and all tables will be dumped |
-| `source_host`                | `TP_SOURCE_HOST`                | Yes (if running with `-d`)      | Name of the database host to dump from |
-| `source_user`                | `TP_SOURCE_USER`                | Yes (if running with `-d`)      | Name of the user to connect with when dumping from the source host |
+| `source_host`                | `TP_SOURCE_HOST`                | If running with `-d`            | Name of the database host to dump from |
+| `source_user`                | `TP_SOURCE_USER`                | If running with `-d`            | Name of the user to connect with when dumping from the source host |
 | `source_password`            | `TP_SOURCE_PASSWORD`            | No                              | Password for the user you connect with if one is set |
 | `source_tables`              | `TP_SOURCE_TABLES`              | No                              | Space-delimited list of tables to dump; ignored if `source_database` not set
 | `source_dump_data`           | `TP_SOURCE_DUMP_DATA`           | No                              | Set to `true` to dump data for all tables
 | `source_add_drop_database`   | `TP_SOURCE_ADD_DROP_DATABASE`   | No                              | Set to `true` to add `DROP DATABASE` statements before `CREATE DATABASE` statements |
 | `source_add_drop_table`      | `TP_SOURCE_ADD_DROP_TABLE`      | No                              | Set to `true` to add `DROP TABLE` statements before `CREATE TABLE` statements |
 | `target_file`                | `TP_TARGET_FILE`                | Yes                             | Path to file in which to write the dump and/or create a new database from |
-| `target_host`                | `TP_TARGET_HOST`                | Yes (if running with `-c`/`-u`) | Name of the database host on which to create new database |
+| `target_host`                | `TP_TARGET_HOST`                | If running with `-c`/`-u`       | Name of the database host on which to create new database |
 | `target_user`                | `TP_TARGET_USER`                | Yes                             | Name of user on the host with which to create new database |
 | `target_password`            | `TP_TARGET_PASSWORD`            | No                              | Password for the user on the host with which to create new database if one is set |
-| `target_root_user`           | `TP_TARGET_ROOT_USER`           | Yes (if running with `-u`)      | Name of admin user with which to create a new user on the target; only used with `-u` |
+| `target_root_user`           | `TP_TARGET_ROOT_USER`           | If running with `-u`            | Name of admin user with which to create a new user on the target; only used with `-u` |
 | `target_root_password`       | `TP_TARGET_ROOT_PASSWORD`       | No                              | Password of admin user with which to create a new user on the target; only used with `-u` |
 
 The above settings map almost directly to `mysqldump` options. For now they represent a limited subset, but more will be added over time.
