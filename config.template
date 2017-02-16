@@ -26,6 +26,12 @@ source_tables="${TP_SOURCE_TABLES:-}"
 #Set to true to include table data
 source_dump_data="${TP_SOURCE_DUMP_DATA:-}"
 
+#Set to true to omit CREATE DATABASE statements
+source_no_create_db="${TP_SOURCE_NO_CREATE_DB:-}"
+
+#Set to true to omit CREATE TABLE statements
+source_no_create_info="${TP_SOURCE_NO_CREATE_INFO:-}"
+
 #Set to true to add DROP DATABASE statement before each CREATE DATABASE statement
 source_add_drop_database="${TP_SOURCE_ADD_DROP_DATABASE:-}"
 

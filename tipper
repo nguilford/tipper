@@ -87,6 +87,16 @@ dump()
         cmd="${cmd} --no-data"
     fi
 
+    if [[ -n "${source_no_create_db}" ]] && ${source_no_create_db}
+    then
+        cmd="${cmd} --no-create-db"
+    fi
+
+    if [[ -n "${source_no_create_info}" ]] && ${source_no_create_info}
+    then
+        cmd="${cmd} --no-create-info"
+    fi
+
     if [ -n "${source_database}" ]
     then
         cmd="${cmd} --databases ${source_database}"
