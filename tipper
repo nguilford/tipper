@@ -28,7 +28,7 @@ EOF
 
 set_config()
 {
-    if [ ! -e ${config_path} ]
+    if [[ ! -e ${config_path} ]]
     then
         printf "No config file found. Please make sure config exists at ${default_config_path} "
         printf "or specify the path to your config file with the -p option\n"
@@ -67,41 +67,29 @@ dump()
     cmd="mysqldump -h${source_host} -u${source_user}"
 
     ## Configure all the dump options based on config
-    if [ -n "${source_password}" ]
-    then
-        cmd="${cmd} -p${source_password}"
-    fi
+    [[ -n "${source_password}" ]] && \
+      cmd="${cmd} -p${source_password}"
 
-    if [[ -n "${source_add_drop_database}" ]] && ${source_add_drop_database}
-    then
-        cmd="${cmd} --add-drop-database"
-    fi
+    [[ -n "${source_add_drop_database}" ]] && ${source_add_drop_database} && \
+      cmd="${cmd} --add-drop-database"
 
-    if [[ -z "${source_add_drop_table}" ]] || ! ${source_add_drop_table}
-    then
-        cmd="${cmd} --skip-add-drop-table"
-    fi
+    [[ -z "${source_add_drop_table}" ]] || ! ${source_add_drop_table} && \
+      cmd="${cmd} --skip-add-drop-table"
 
-    if [[ -z "${source_dump_data}" ]] || ! ${source_dump_data}
-    then
-        cmd="${cmd} --no-data"
-    fi
+    [[ -z "${source_dump_data}" ]] || ! ${source_dump_data} && \
+      cmd="${cmd} --no-data"
 
-    if [[ -n "${source_no_create_db}" ]] && ${source_no_create_db}
-    then
-        cmd="${cmd} --no-create-db"
-    fi
+    [[ -n "${source_no_create_db}" ]] && ${source_no_create_db} && \
+      cmd="${cmd} --no-create-db"
 
-    if [[ -n "${source_no_create_info}" ]] && ${source_no_create_info}
-    then
-        cmd="${cmd} --no-create-info"
-    fi
+    [[ -n "${source_no_create_info}" ]] && ${source_no_create_info} && \
+      cmd="${cmd} --no-create-info"
 
-    if [ -n "${source_database}" ]
+    if [[ -n "${source_database}" ]]
     then
         cmd="${cmd} --databases ${source_database}"
 
-        if [ -n "${source_tables}" ]
+        if [[ -n "${source_tables}" ]]
         then
             cmd="${cmd} ${source_tables}"
         fi
@@ -129,18 +117,11 @@ create_database()
         exit 1
     fi
 
-    if [ ! -e ${target_file} ]
-    then
-        printf "Dump file ${target_file} does not exist.\n"
-        exit 1
-    fi
+    [[ ! -e ${target_file} ]] && { printf "Dump file ${target_file} does not exist.\n"; exit 1 }
 
     cmd="mysql -h${target_host} -u${target_user}"
 
-    if [ -n "${target_password}" ]
-    then
-        cmd="${cmd} -p${target_password}"
-    fi
+    [[ -n "${target_password}" ]] && cmd="${cmd} -p${target_password}"
 
     ${cmd} < ${target_file}
 }
@@ -162,10 +143,7 @@ create_user()
     ### Assemble CREATE USER statement
     statement="CREATE USER '${target_user}'@'%'"
 
-    if [ -n "${target_password}" ]
-    then
-        statement="${statement} IDENTIFIED BY '${target_password}'"
-    fi
+    [[ -n "${target_password}" ]] && statement="${statement} IDENTIFIED BY '${target_password}'"
 
     statement="${statement}; GRANT ALL PRIVILEGES ON *.* TO '${target_user}'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
@@ -173,14 +151,11 @@ create_user()
     ### Assemble base mysql command
     base_cmd="mysql -h${target_host} -u${target_root_user}"
 
-    if [ -n "${target_root_password}" ]
-    then
-        base_cmd="${base_cmd} -p${target_root_password}"
-    fi
+    [[ -n "${target_root_password}" ]] && base_cmd="${base_cmd} -p${target_root_password}"
 
 
     ### If user does not exist, create it; otherwise, skip
-    if [ "$(${base_cmd} -se "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '${target_user}')")" == "0" ]
+    if [[ "$(${base_cmd} -se "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '${target_user}')")" == "0" ]]
     then
         printf "Creating user ${target_user} in database on ${target_host}...\n"
         ${base_cmd} -e "${statement}"
@@ -222,17 +197,6 @@ done
 printf "Setting configuration...\n"
 set_config
 
-if [ -n "${dump}" ]
-then
-    dump
-fi
-
-if [ -n "${user_create}" ]
-then
-  create_user
-fi
-
-if [ -n "${database_create}" ]
-then
-  create_database
-fi
+[[ -n "${dump}" ]] && dump
+[[ -n "${user_create}" ]] && create_user
+[[ -n "${database_create}" ]] && create_database
